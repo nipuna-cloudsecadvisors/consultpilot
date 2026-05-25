@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(npm ping --registry https://registry.yarnpkg.com 2>&1)"
+    ]
+  }
+}
