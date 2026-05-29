@@ -1,16 +1,52 @@
-import { Bell } from 'lucide-react'
+import { NotificationComposer } from '@/components/notifications/notification-composer'
+import { NotificationsTable } from '@/components/notifications/notifications-table'
+import { getNotifications } from '@/lib/actions/notifications'
+import { getSupabaseServerClient } from '@/lib/supabase/server'
 
-export default function NotificationsPage() {
+async function getClients() {
+  const supabase = await getSupabaseServerClient()
+  const { data } = await supabase
+    .from('clients')
+    .select('id, name, contact_phone')
+    .order('name', { ascending: true })
+  return (data ?? []).map((c) => ({
+    id:           c.id,
+    name:         c.name,
+    contactPhone: c.contact_phone,
+  }))
+}
+
+export default async function NotificationsPage() {
+  const [notifications, clients] = await Promise.all([
+    getNotifications(),
+    getClients(),
+  ])
+
+  const rows = notifications.map((n) => ({
+    id:              n.id,
+    recipientNumber: n.recipientNumber,
+    type:            n.type,
+    message:         n.message,
+    status:          n.status,
+    sentAt:          n.sentAt,
+    createdAt:       n.createdAt,
+    clients:         n.clients as { name: string } | null,
+  }))
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Notifications</h1>
-        <p className="text-muted-foreground">WhatsApp alerts & reminders</p>
+        <p className="text-muted-foreground">
+          Send WhatsApp messages to clients via the WhatsApp Business API
+        </p>
       </div>
-      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-16 text-center">
-        <Bell className="mb-3 h-10 w-10 text-muted-foreground/50" />
-        <p className="font-medium">Coming in Module 5</p>
-        <p className="text-sm text-muted-foreground">WhatsApp Business API integration</p>
+
+      <NotificationComposer clients={clients} />
+
+      <div>
+        <h2 className="text-lg font-semibold mb-4">Message history</h2>
+        <NotificationsTable notifications={rows} />
       </div>
     </div>
   )
