@@ -1,17 +1,27 @@
-import { Users } from 'lucide-react'
+import Link from 'next/link'
+import { Plus } from 'lucide-react'
+import { buttonVariants } from '@/components/ui/button'
+import { ClientsTable } from '@/components/clients/clients-table'
+import { getClients } from '@/lib/actions/clients'
+import { cn } from '@/lib/utils'
 
-export default function ClientsPage() {
+export default async function ClientsPage() {
+  const clients = await getClients()
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Clients</h1>
-        <p className="text-muted-foreground">Manage your client engagements</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Clients</h1>
+          <p className="text-muted-foreground">Manage your client relationships</p>
+        </div>
+        <Link href="/clients/new" className={cn(buttonVariants())}>
+          <Plus className="h-4 w-4 mr-2" />
+          New client
+        </Link>
       </div>
-      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-border py-16 text-center">
-        <Users className="mb-3 h-10 w-10 text-muted-foreground/50" />
-        <p className="font-medium">No clients yet</p>
-        <p className="text-sm text-muted-foreground">Client management coming in Module 2</p>
-      </div>
+
+      <ClientsTable clients={clients} />
     </div>
   )
 }

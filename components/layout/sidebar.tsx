@@ -2,13 +2,24 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Users, Settings, ShieldCheck } from 'lucide-react'
+import {
+  LayoutDashboard,
+  Users,
+  FolderKanban,
+  FileText,
+  Bell,
+  Settings,
+  ShieldCheck,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/clients', label: 'Clients', icon: Users },
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/dashboard',      label: 'Dashboard',      icon: LayoutDashboard },
+  { href: '/clients',        label: 'Clients',         icon: Users },
+  { href: '/projects',       label: 'Projects',        icon: FolderKanban },
+  { href: '/reports',        label: 'Reports',         icon: FileText },
+  { href: '/notifications',  label: 'Notifications',   icon: Bell },
+  { href: '/settings',       label: 'Settings',        icon: Settings },
 ]
 
 export function Sidebar() {
@@ -43,7 +54,7 @@ export function Sidebar() {
       </nav>
 
       <div className="border-t border-sidebar-border px-4 py-3">
-        <p className="text-xs text-sidebar-foreground/50">Module 1 · Foundation</p>
+        <p className="text-xs text-sidebar-foreground/50">ConsultPilot GRC</p>
       </div>
     </aside>
   )
