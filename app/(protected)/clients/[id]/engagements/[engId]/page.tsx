@@ -83,12 +83,20 @@ export default async function EngagementDetailPage({ params }: PageProps) {
         )}
       </div>
 
-      {/* Placeholder for Module 3 */}
-      <div className="rounded-lg border border-dashed border-border p-8 text-center">
-        <p className="text-sm font-medium">Certification project coming in Module 3</p>
-        <p className="text-xs text-muted-foreground mt-1">
-          Controls, evidence, and findings will be tracked here
-        </p>
+      {/* Link to Projects */}
+      <div className="rounded-lg border border-border p-6 flex items-center justify-between">
+        <div>
+          <p className="text-sm font-medium">Certification project</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            Track controls, evidence, and findings in a project
+          </p>
+        </div>
+        <Link
+          href="/projects/new"
+          className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
+        >
+          Create project
+        </Link>
       </div>
     </div>
   )
